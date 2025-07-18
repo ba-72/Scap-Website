@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apple 风格带二级菜单的示例</title>
+  <style>
+    /* ========== 基础重置与布局 ========== */
+    html, body {
+      margin: 0;            /* 清除默认外边距 */
+      height: 100%;         /* 让 body 占满视口高度 */
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;  /* 包括内边距和边框在宽高计算内 */
+    }
+    body {
+      display: flex;
+      flex-direction: column;   /* 垂直方向布局 */
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", sans-serif;
+      background: #fff;         /* 背景白色 */
+      color: #000;              /* 文字黑色 */
+    }
+    h1, h2, h3, p, ul, li, a {
+      margin: 0;
+      padding: 0;
+      list-style: none;       /* 列表无默认符 */
+      text-decoration: none;  /* 链接无下划线 */
+      color: inherit;         /* 继承父级文字颜色 */
+    }
+
+    /* ========== 顶部导航 ========== */
+    header {
+      position: fixed;        /* 固定在页面顶部 */
+      top: 0; left: 0; right: 0;
+      height: 44px;           /* 高度和 Apple 官网一致 */
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000;          /* 确保在其他元素之上 */
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: bold;      /* Apple 标志字体效果 */
+    }
+    nav ul {
+      display: flex;
+      gap: 30px;              /* 顶级菜单项水平间距 */
+    }
+    nav ul li {
+      position: relative;     /* 为子菜单绝对定位做准备 */
+    }
+    nav ul li a {
+      display: block;
+      padding: 10px 0;
+      font-size: 14px;
+      transition: color .2s;  /* 悬停时文字渐变 */
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: #0071e3;         /* 悬停及激活态颜色 */
+    }
+    /* 激活状态下的下划线效果 */
+    nav ul li a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      left: 0; right: 0;
+      height: 2px;
+      background: #0071e3;
+    }
+    .icons {
+      display: flex;
+      gap: 15px;              /* 搜索和购物图标间距 */
+    }
+
+    /* ========== 背景蒙层模糊 ========== */
+    .overlay {
+      position: fixed;
+      top: 44px; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px); /* 背景模糊 */
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .3s;
+      z-index: 900;
+    }
+    /* 展开二级菜单时显示蒙层 */
+    .overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* ========== 二级菜单 ========== */
+    .submenu {
+      position: fixed;
+      top: 44px;              /* 紧贴导航下方 */
+      left: 0;
+      width: 100vw;           /* 填满整个视口宽度 */
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(20px); /* 背景再次模糊 */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 20px 0;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .3s;
+      z-index: 1001;
+      max-height: calc(100vh - 44px); /* 最大高度为视口剩余 */
+      overflow-y: auto;      /* 内容超出时滚动 */
+    }
+    /* 悬停父级菜单时展开二级菜单 */
+    nav ul li:hover > .submenu {
+      visibility: visible;
+      opacity: 1;
+    }
+    .submenu-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr; /* 三列布局 */
+      max-width: 1200px;
+      margin: 28px auto 28px 80px; /* 右对齐，左侧保留10px */
+      gap: 1px;           /* 三列之间的间隙，可调整 */
+    }
+    .submenu-column h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    .submenu-column ul {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    /* 第一列文字更大更醒目 */
+    .submenu-column:first-child ul li a {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 0.8;
+    }
+    /* 其余列文字略小 */
+    .submenu-column:not(:first-child) ul li a {
+      font-size: 13px;
+      line-height: 0.8;
+      font-weight: 600;
+    }
+
+    /* ========== 主体内容模糊 ========== */
+    .blur {
+      filter: blur(5px);
+      transition: filter .3s;
+    }
+
+    /* ========== 主体与页脚 ========== */
+    
+    main {
+      flex: 1;
+      padding: 64px 0px 0px;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+    footer {
+      background: #f5f5f7;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 12px;
+      color: #444;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .footer-links ul {
+      min-width: 120px;
+    }
+    /* =========hero======== */
+        .hero {
+  position: relative;
+  width: 100vw;
+  height: 66.6vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+    }
+
+    .hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+      /*transform: translateY(-10%);*/
+    }
+
+    .hero-text {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+      font-family: "Helvetica Neue", Helvetica, sans-serif, "PingFang SC";
+      font-weight: bold;
+      font-size: 32px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 1);
+    }
+
+    .hero-text p {
+      font-size: 16px;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"></div>
+    <nav>
+      <ul>
+        <li>
+          <a href="#" class="active">Home</a>
+          <!-- 二级菜单容器 -->
+          <div class="submenu">
+            <div class="submenu-content">
+              <!-- 第一列：Explore Mac -->
+              <div class="submenu-column">
+                <h3>Our Works</h3>
+                <ul>
+                  <li><a href="#">社刊 RE:01</a></li>
+                  <li><a href="#">社刊 RE:02</a></li>
+                  <li><a href="#">社刊 RE:03</a></li>
+                </ul>
+              </div>
+              <!-- 第二列：Shop Mac -->
+              <div class="submenu-column">
+                <h3>About us</h3>
+                <ul>
+                  <li><a href="#">社团介绍</a></li>
+                  <li><a href="#">人员介绍</a></li>
+                  <li><a href="#">编年史</a></li>
+                </ul>
+              </div>
+              <!-- 第三列：More from Mac -->
+              <div class="submenu-column">
+                <h3>Support us</h3>
+                <ul>
+                  <li><a href="#">Mac Support</a></li>
+                  <li><a href="#">AppleCare+ for Mac</a></li>
+                  <li><a href="#">macOS Tahoe 26 Preview</a></li>
+                  <li><a href="#">Apple Intelligence</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!-- 其他顶级菜单项 -->
+        <li><a href="#">Today / 近期活动</a></li>
+        <li><a href="#">Animate / 放映</a></li>
+        <li><a href="#">Comic / 绘画</a></li>
+        <li><a href="#">Game / 旮旯给木制作</a></li>
+        <li><a href="#">Novel / 投稿</a></li>
+        <li><a href="#">往期活动</a></li>
+        <li><a href="#">Routine</a></li>
+      </ul>
+    </nav>
+    <div class="icons"><a href="#">🔍</a><a href="#">🛒</a></div>
+  </header>
+
+  <!-- 背景蒙层，用于模糊主体 -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- 主体内容区域 -->
+  <main id="content">
+    <section class="hero">
+      <img src="img/hero.jpg" alt="Hero Image" />
+      <div class="hero-text">
+        <h1>SCAP Anime</h1>
+        <p>SUSTC Comic and Animation Party.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="footer-links">
+      <ul><li><strong>Shop and Learn</strong></li><li><a href="#">Mac</a></li><li><a href="#">iPad</a></li><li><a href="#">iPhone</a></li><li><a href="#">Watch</a></li></ul>
+      <ul><li><strong>Services</strong></li><li><a href="#">Apple Music</a></li><li><a href="#">Apple TV+</a></li><li><a href="#">iCloud</a></li><li><a href="#">AppleCare</a></li></ul>
+      <ul><li><strong>About Apple</strong></li><li><a href="#">Newsroom</a></li><li><a href="#">Investor Relations</a></li><li><a href="#">Careers</a></li><li><a href="#">Environment</a></li></ul>
+    </div>
+    <p>© 2025 Apple Inc. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // 获取 Mac 菜单项
+    const navItem = document.querySelector('nav ul li');
+    const overlay = document.getElementById('overlay');
+    const content = document.getElementById('content');
+    // 鼠标移入时显示蒙层并模糊主体
+    navItem.addEventListener('mouseenter', () => {
+      overlay.classList.add('active');
+      content.classList.add('blur');
+    });
+    // 鼠标移出时隐藏蒙层并恢复主体
+    navItem.addEventListener('mouseleave', () => {
+      overlay.classList.remove('active');
+      content.classList.remove('blur');
+    });
+  </script>
+</body>
+</html>
