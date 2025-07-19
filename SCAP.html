@@ -45,6 +45,26 @@
       font-size: 20px;
       font-weight: bold;      /* Apple 标志字体效果 */
     }
+
+    nav li {
+      position: relative; /* 确保子菜单相对父菜单定位 */
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 100%; /* 紧贴父菜单下方 */
+      left: 0;
+      width: 100%; /* 宽度与父菜单一致 */
+      z-index: 100; /* 避免被其他元素覆盖 */
+      padding-top: 10px; /* 透明间隙 */
+      margin-top: -10px; /* 抵消间隙对布局的影响 */
+    }
+
+    nav li:hover .submenu {
+      display: block; /* 鼠标在父菜单或子菜单上时保持显示 */
+    }
+
     nav ul {
       display: flex;
       gap: 30px;              /* 顶级菜单项水平间距 */
@@ -218,7 +238,7 @@
 </head>
 <body>
   <header>
-    <div class="logo"></div>
+    <div class="logo"></div>
     <nav>
       <ul>
         <li>
@@ -226,16 +246,19 @@
           <!-- 二级菜单容器 -->
           <div class="submenu">
             <div class="submenu-content">
-              <!-- 第一列：Explore Mac -->
+              <!-- 第一列：社刊 -->
               <div class="submenu-column">
                 <h3>Our Works</h3>
                 <ul>
-                  <li><a href="#">社刊 RE:01</a></li>
-                  <li><a href="#">社刊 RE:02</a></li>
-                  <li><a href="#">社刊 RE:03</a></li>
+                  <!-- <li><a href="#">社刊 RE:01</a></li> -->
+                  <!-- <li><a href="#">社刊 RE:02</a></li> -->
+                  <!-- <li><a href="#">社刊 RE:03</a></li> -->
+                  <li><a href="./pdf/RE01.pdf" target="_blank">社刊 RE:01</a></li>
+                  <li><a href="./pdf/RE02.pdf" target="_blank">社刊 RE:02</a></li>
+                  <li><a href="./pdf/RE03.pdf" target="_blank">社刊 RE:03</a></li>
                 </ul>
               </div>
-              <!-- 第二列：Shop Mac -->
+              <!-- 第二列：社团信息 -->
               <div class="submenu-column">
                 <h3>About us</h3>
                 <ul>
@@ -244,7 +267,7 @@
                   <li><a href="#">编年史</a></li>
                 </ul>
               </div>
-              <!-- 第三列：More from Mac -->
+              <!-- 第三列：More -->
               <div class="submenu-column">
                 <h3>Support us</h3>
                 <ul>
@@ -261,7 +284,7 @@
         <li><a href="#">Today / 近期活动</a></li>
         <li><a href="#">Animate / 放映</a></li>
         <li><a href="#">Comic / 绘画</a></li>
-        <li><a href="#">Game / 旮旯给木制作</a></li>
+        <li><a href="#">Game / galgame制作</a></li>
         <li><a href="#">Novel / 投稿</a></li>
         <li><a href="#">往期活动</a></li>
         <li><a href="#">Routine</a></li>
@@ -291,7 +314,7 @@
       <ul><li><strong>Services</strong></li><li><a href="#">Apple Music</a></li><li><a href="#">Apple TV+</a></li><li><a href="#">iCloud</a></li><li><a href="#">AppleCare</a></li></ul>
       <ul><li><strong>About Apple</strong></li><li><a href="#">Newsroom</a></li><li><a href="#">Investor Relations</a></li><li><a href="#">Careers</a></li><li><a href="#">Environment</a></li></ul>
     </div>
-    <p>© 2025 Apple Inc. All rights reserved.</p>
+    <p>© 2025 Scap Anime. All rights reserved.</p>
   </footer>
 
   <script>
