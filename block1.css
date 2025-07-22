@@ -1,0 +1,138 @@
+
+.carousel {
+    position: relative;
+    padding: 20px 0;
+    overflow: hidden; /* 裁剪溢出，隐藏白边 */
+}
+
+/* 可滚动的卡片行 */
+.carousel-container {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;                   /* 支持横向滚动 */
+    scroll-behavior: smooth;            /* 点击箭头时平滑滚动 */
+    -webkit-overflow-scrolling: touch;  /* iOS 上更顺滑 */
+    
+    /* 隐藏原生滚动条 */
+    scrollbar-width: none;              /* Firefox */
+}
+.carousel-container::-webkit-scrollbar {
+    display: none;                      /* Safari & Chrome */
+}
+
+/* 单张卡片，220×300，圆角、阴影 */
+.card {
+    position: relative;
+    flex: 0 0 auto;
+    width: 220px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 图片铺满整个卡片 */
+.card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-info {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 8px;                 /* 略小一些的内边距 */
+    height: 64px;
+    background: rgba(255,255,255,0.4);
+    backdrop-filter: blur(8px);   /* 略小一些的模糊半径 */
+    color: #111;
+    text-align: center;           /* 文本水平居中 */
+    /* 新增：Flex 容器 */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;    /* 水平居中 */
+    justify-content: center;/* 垂直居中 */
+}
+
+/* 让每一行之间都有固定间距 */
+.card-info > * + * {
+    margin-top: 4px;
+}
+.card-info .description + .year {
+    margin-top: 0px;
+}
+
+/* 标题 */
+.card-info h3 {
+    margin: 0;
+    font-size: 0.85rem;           /* 略小一点 */
+    font-weight: bold;
+}
+
+.description {
+    width: 100%; 
+    position: relative;
+    overflow: hidden;      /* 裁剪多余文字 */
+    white-space: nowrap;   /* 不换行 */
+    font-size: 0.7rem;
+    margin: 0;
+}
+.marquee-content {
+    display: inline-flex;  /* 并排两份文字 */
+    animation: scroll var(--marquee-time) linear infinite;
+}
+.marquee-content span + span {
+    margin-left: 2rem;     /* 两份文字间隔 */
+}
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-1 * var(--marquee-dist))); }
+}
+/* 年份行 */
+.card-info p.year {
+    font-size: 0.7rem;
+}
+.carousel-arrow .arrow-icon {
+    display: inline-block;
+    position: relative;
+    top: -2px;    /* 向上浮 2px */
+}
+/* 箭头按钮 */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.3);
+    color: #fff;
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .3s;
+    z-index: 10;
+}
+.carousel:hover .carousel-arrow {
+    opacity: 1; /* 悬浮时才出现 */
+}
+.carousel-arrow.left  { left: 8px; }
+.carousel-arrow.right { right: 8px; }
+/* Dark Mode Media Query */
+@media (prefers-color-scheme: dark) {
+    .card {
+    box-shadow: 0 4px 8px rgba(255,255,255,0.1); /* Lighter shadow */
+    }
+    .card-info {
+    background: rgba(0,0,0,0.4); /* Dark card info */
+    color: #eee; /* Light text */
+    }
+    .carousel-arrow {
+    background: rgba(255,255,255,0.3); /* Lighter arrow background for visibility */
+    color: #000; /* Dark arrow text */
+    }
+}

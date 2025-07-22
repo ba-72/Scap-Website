@@ -1,0 +1,100 @@
+  <header>
+    <div class="logo"> </div>
+    <nav>
+      <ul>
+        <li>
+          <a href="#" class="active">Home</a>
+          <!-- 二级菜单容器 -->
+          <div class="submenu">
+            <div class="submenu-content">
+              <div class="submenu-column">
+                <h3>Our Works</h3>
+                <ul>
+                  <li><a href="#">社刊 RE:01</a></li>
+                  <li><a href="#">社刊 RE:02</a></li>
+                  <li><a href="#">社刊 RE:03</a></li>
+                </ul>
+              </div>
+              <div class="submenu-column">
+                <h3>About us</h3>
+                <ul>
+                  <li><a href="#">社团介绍</a></li>
+                  <li><a href="#">人员介绍</a></li>
+                  <li><a href="#">编年史</a></li>
+                </ul>
+              </div>
+              <div class="submenu-column">
+                <h3>Support us</h3>
+                <ul>
+                  <li><a href="#">Mac Support</a></li>
+                  <li><a href="#">AppleCare+ for Mac</a></li>
+                  <li><a href="#">macOS Tahoe 26 Preview</a></li>
+                  <li><a href="#">Apple Intelligence</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="blur-overlay"></div>
+        </li>
+        <!-- 其他顶级菜单项 -->
+        <li><a href="#">Today / 近期活动</a></li>
+        <li><a href="#">Animate / 放映</a></li>
+        <li><a href="#">Comic / 绘画</a></li>
+        <li><a href="#">Game / 旮旯给木制作</a></li>
+        <li><a href="#">Novel / 投稿</a></li>
+        <li><a href="#">往期活动</a></li>
+        <li><a href="#">Routine</a></li>
+      </ul>
+    </nav>
+    <div class="icons">
+      <a href="#" aria-label="Search">🔍</a>
+      <a href="#" aria-label="Cart">🛒</a>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <!-- 背景蒙层，用于模糊主体 -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li>
+        <a href="#" class="active" onclick="toggleMobileSubmenu(event, 'home-submenu')">Home</a>
+        <div id="home-submenu" class="mobile-submenu">
+          <div>
+            <h3>Our Works</h3>
+            <ul>
+              <li><a href="#">社刊 RE:01</a></li>
+              <li><a href="#">社刊 RE:02</a></li>
+              <li><a href="#">社刊 RE:03</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>About us</h3>
+            <ul>
+              <li><a href="#">社团介绍</a></li>
+              <li><a href="#">人员介绍</a></li>
+              <li><a href="#">编年史</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Support us</h3>
+            <ul>
+              <li><a href="#">Mac Support</a></li>
+              <li><a href="#">AppleCare+ for Mac</a></li>
+              <li><a href="#">macOS Tahoe 26 Preview</a></li>
+              <li><a href="#">Apple Intelligence</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li><a href="#">Today / 近期活动</a></li>
+      <li><a href="#">Animate / 放映</a></li>
+      <li><a href="#">Comic / 绘画</a></li>
+      <li><a href="#">Game / 旮旯给木制作</a></li>
+      <li><a href="#">Novel / 投稿</a></li>
+      <li><a href="#">往期活动</a></li>
+      <li><a href="#">Routine</a></li>
+    </ul>
+  </div>

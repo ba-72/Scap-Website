@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Artists</title>
+    <style>
+        /* 设置 body 的基本样式，包括字体、文字颜色和背景过渡效果 */
+        body {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        /* 主内容容器的样式，限制最大宽度并居中显示，设置相对定位以便放置按钮 */
+        #content {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        /* 切换按钮的样式，定位在右上角 */
+        #toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        /* 特色部分的默认显示为块级（列表视图） */
+        #featured {
+            display: block;
+        }
+        /* 每个卡片的样式，用于列表视图：flex 布局，居中对齐 */
+        .card {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+        /* 卡片中图像的样式：固定大小，圆形，右边距，剪切填充 */
+        .card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover; /* 改为剪切填充，确保图像按比例剪切以填充容器 */
+        }
+        /* 卡片中文本的样式 */
+        .card span {
+            font-size: 16px;
+        }
+        /* 网格视图的样式：flex 布局，换行，均匀分布 */
+        #featured.grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: none; /* 移除网格视图的最大宽度限制 */
+            width: 100%; /* 确保网格视图占满容器宽度 */
+            margin: 0; /* 移除默认边距 */
+            padding: 0 10px; /* 增加左右内边距以避免贴边 */
+        }
+        /* 网格视图中卡片的样式：列方向，居中，计算宽度，边框等 */
+        #featured.grid .card {
+            flex-direction: column;
+            align-items: center;
+            width: calc(33.33% - 20px); /* 调整为三列，减少边距影响 */
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            border-bottom: none;
+            text-align: center;
+            box-sizing: border-box; /* 确保内边距包含在宽度内 */
+        }
+        /* 网格视图中图像的样式：全宽，固定高度，圆角，剪切填充 */
+        #featured.grid .card img {
+            width: 100%;
+            height: 200px; /* 固定高度，结合 object-fit: cover 实现剪切填充 */
+            border-radius: 8px;
+            margin-right: 0;
+            margin-bottom: 10px;
+            object-fit: cover; /* 剪切填充，确保图像不拉伸变形 */
+        }
+        /* 网格视图中文本的样式 */
+        #featured.grid .card span {
+            font-size: 14px;
+        }
+        /* 根据系统浅色主题调整样式 */
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #f0f0f0;
+                color: #000;
+            }
+            #toggle {
+                background-color: #ccc;
+                color: #000;
+            }
+            .card {
+                border-bottom: 1px solid #ccc;
+            }
+            #featured.grid .card {
+                border: 1px solid #ccc;
+            }
+        }
+        /* 根据系统深色主题调整样式 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+            }
+            .card {
+                border-bottom: 1px solid #333;
+            }
+            #featured.grid .card {
+                border: 1px solid #333;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主内容容器 -->
+    <main id="content">
+        <!-- 视图切换按钮 -->
+        <button id="toggle">Grid View</button>
+        <!-- 特色部分，包含所有艺术家卡片 -->
+        <section id="featured">
+            <div class="card"><img src="img/IMG_0572.PNG" alt="Ado"><span>Ado</span></div>
+            <div class="card"><img src="img/IMG_0573.PNG" alt="back number"><span>back number</span></div>
+            <div class="card"><img src="img/IMG_0574.PNG" alt="Bloodywood"><span>Bloodywood</span></div>
+            <div class="card"><img src="img/IMG_0575.PNG" alt="BLU-SWING"><span>BLU-SWING ★</span></div>
+            <div class="card"><img src="img/IMG_0576.PNG" alt="Có shu Nie"><span>Có shu Nie</span></div>
+            <div class="card"><img src="img/IMG_0577.PNG" alt="DIVELA"><span>DIVELA</span></div>
+            <div class="card"><img src="img/IMG_0578.PNG" alt="Dream Cave"><span>Dream Cave</span></div>
+            <div class="card"><img src="img/IMG_0579.PNG" alt="DUSTCELL"><span>DUSTCELL</span></div>
+            <div class="card"><img src="img/IMG_0580.PNG" alt="Ellie Minibot"><span>Ellie Minibot</span></div>
+            <div class="card"><img src="img/IMG_0581.PNG" alt="Evan Call"><span>Evan Call</span></div>
+            <div class="card"><img src="img/IMG_0582.PNG" alt="Giga"><span>Giga</span></div>
+            <div class="card"><img src="img/IMG_0572.PNG" alt="Kanaria"><span>Kanaria</span></div>
+        </section>
+    </main>
+    <!-- JavaScript 脚本，用于处理视图切换 -->
+    <script>
+        // 获取按钮和特色部分元素
+        const toggle = document.getElementById('toggle');
+        const featured = document.getElementById('featured');
+        
+        // 添加点击事件监听器
+        toggle.addEventListener('click', () => {
+            // 切换 'grid' 类名以改变布局
+            featured.classList.toggle('grid');
+            // 根据当前是否为网格视图更新按钮文本
+            toggle.textContent = featured.classList.contains('grid') ? 'List View' : 'Grid View';
+        });
+    </script>
