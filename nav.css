@@ -21,7 +21,10 @@
       justify-content: center;
     }
     nav ul li {
-      position: relative;
+      position: static;
+    }
+    nav > ul > li:has(.submenu) {
+      position: relative; /* 设置定位基准 */
     }
     nav ul li a {
       display: block;
@@ -80,6 +83,7 @@
       top: 40px;              /* 紧贴导航下方 */
       left: 0;
       width: 100vw;           /* 填满整个视口宽度 */
+      /* width: max-content; 宽度按内容自适应 */
       background: rgba(255, 255, 255, 1);
       backdrop-filter: blur(0px); /* 背景再次模糊 */
       box-shadow: 0 10px 30px rgba(0,0,0,0);
@@ -98,15 +102,18 @@
       opacity: 1;
       transform: translateY(0);
     }
+      
     .submenu-content {
-      display: grid;
+      display: flex;
       grid-template-columns: 1fr 1fr 1fr;
       max-width: 1200px;
-      margin: 28px auto 28px 80px;
+      margin: 28px auto 28px calc(50vw - 406px);
+      gap: 150px;
       opacity: 0;
       transform: translateY(-10px);
       transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
       will-change: transform, opacity;
+      transform: translateY(-10px);
     }
 
     .parent-menu:hover .submenu {

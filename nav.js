@@ -5,6 +5,8 @@ const content = document.getElementById('content');
 const mobileToggle = document.querySelector('.mobile-menu-toggle');
 const mobileMenu = document.getElementById('mobile-menu');
 const navItem = document.querySelector('nav ul li');
+const width = window.innerWidth;  
+console.log(`当前窗口宽度：${width}px`); 
 let ticking = false;
 
 // Desktop Submenu Hover
@@ -34,3 +36,5 @@ function toggleMobileSubmenu(event, id) {
     const submenu = document.getElementById(id);
     submenu.classList.toggle('active');
 }
+
+document.documentElement.style.setProperty('--window-width', `${window.innerWidth}px`);
