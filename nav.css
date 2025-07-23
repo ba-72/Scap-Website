@@ -127,38 +127,38 @@
     /* 按左上到右下顺序设置动画延迟 */
     /* 第一列 */
     .submenu-column:nth-child(1) li:nth-child(1) {
-      transition-delay: 0.02s;
+      transition-delay: 0.03s;
     }
     .submenu-column:nth-child(1) li:nth-child(2) {
-      transition-delay: 0.04s;
+      transition-delay: 0.06s;
     }
     .submenu-column:nth-child(1) li:nth-child(3) {
-      transition-delay: 0.06s;
+      transition-delay: 0.09s;
     }
 
     /* 第二列 */
     .submenu-column:nth-child(2) li:nth-child(1) {
-      transition-delay: 0.08s;
+      transition-delay: 0.15s;
     }
     .submenu-column:nth-child(2) li:nth-child(2) {
-      transition-delay: 0.1s;
+      transition-delay: 0.18s;
     }
     .submenu-column:nth-child(2) li:nth-child(3) {
-      transition-delay: 0.12s;
+      transition-delay: 0.21s;
     }
 
     /* 第三列 */
     .submenu-column:nth-child(3) li:nth-child(1) {
-      transition-delay: 0.14s;
+      transition-delay: 0.27s;
     }
     .submenu-column:nth-child(3) li:nth-child(2) {
-      transition-delay: 0.16s;
+      transition-delay: 0.3s;
     }
     .submenu-column:nth-child(3) li:nth-child(3) {
-      transition-delay: 0.18s;
+      transition-delay: 0.33s;
     }
     .submenu-column:nth-child(3) li:nth-child(4) {
-      transition-delay: 0.2s;
+      transition-delay: 0.36s;
     }
 
     /* 鼠标悬停时触发动画 */
@@ -360,4 +360,20 @@
       .mobile-menu-toggle {
         color: #fff;
       }
+
+      .blur-overlay {
+      position: fixed;
+      top: 44px; /* 从导航栏下方开始覆盖 */
+      left: 0;
+      width: 100vw;
+      height: calc(100vh - 44px); /* 扣除导航栏高度 */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px); /* Safari兼容 */
+      background: rgba(30, 30, 30, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      z-index: 999; /* 低于二级菜单（1001）但高于主内容 */
+      pointer-events: none; /* 避免遮挡下方交互 */
+    }
     }
