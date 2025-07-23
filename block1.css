@@ -1,14 +1,16 @@
-
 .carousel {
     position: relative;
-    padding: 20px 0;
-    overflow: hidden; /* 裁剪溢出，隐藏白边 */
+    padding: 20px 16px;
+    padding-bottom: 10px;
+    padding-top: 10px; /* 增加左右padding，为放大卡片留空间 */
+    /* 移除 overflow: hidden，防止裁剪放大卡片 */
 }
 
 /* 可滚动的卡片行 */
 .carousel-container {
     display: flex;
     gap: 16px;
+    padding: 20px 16px;
     overflow-x: auto;                   /* 支持横向滚动 */
     scroll-behavior: smooth;            /* 点击箭头时平滑滚动 */
     -webkit-overflow-scrolling: touch;  /* iOS 上更顺滑 */
@@ -26,9 +28,34 @@
     flex: 0 0 auto;
     width: 220px;
     height: 300px;
-    overflow: hidden;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 3px rgba(0,0,0,0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 平滑过渡放大和阴影 */
+}
+
+/* 卡片悬浮蒙层，覆盖整个卡片包括标签 */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* 半透明黑色蒙层 */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 8; /* 蒙层覆盖图片和信息区域 */
+    border-radius: 12px; /* 与卡片相同的圆角 */
+}
+
+/* 鼠标悬浮时显示蒙层并放大整个卡片 */
+.card:hover {
+    transform: scale(1.05); /* 放大整个卡片 */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* 增强阴影 */
+    z-index: 15; /* 提升层级，避免被相邻卡片或容器遮挡 */
+}
+.card:hover::after {
+    opacity: 1; /* 显示蒙层 */
 }
 
 /* 图片铺满整个卡片 */
@@ -37,22 +64,35 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 12px; /* 与卡片相同的圆角 */
 }
 
+/* 卡片链接样式 */
+.card a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9; /* 确保链接在蒙层之上 */
+    text-decoration: none; /* 移除下划线 */
+}
+
+/* 信息区域 */
 .card-info {
     position: absolute;
     left: 0; right: 0; bottom: 0;
-    padding: 8px;                 /* 略小一些的内边距 */
     height: 64px;
-    background: rgba(255,255,255,0.4);
-    backdrop-filter: blur(8px);   /* 略小一些的模糊半径 */
+    backdrop-filter: blur(8px);
     color: #111;
-    text-align: center;           /* 文本水平居中 */
-    /* 新增：Flex 容器 */
+    text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: stretch;    /* 水平居中 */
-    justify-content: center;/* 垂直居中 */
+    align-items: stretch;
+    justify-content: center;
+    z-index: 7; /* 信息区域在图片之上，蒙层之下 */
+    border-bottom-left-radius: 12px; /* 与卡片底部圆角一致 */
+    border-bottom-right-radius: 12px;
 }
 
 /* 让每一行之间都有固定间距 */
@@ -66,38 +106,43 @@
 /* 标题 */
 .card-info h3 {
     margin: 0;
-    font-size: 0.85rem;           /* 略小一点 */
+    font-size: 0.85rem;
     font-weight: bold;
 }
 
+/* 描述（跑马灯） */
 .description {
     width: 100%; 
     position: relative;
-    overflow: hidden;      /* 裁剪多余文字 */
-    white-space: nowrap;   /* 不换行 */
+    overflow: hidden;
+    white-space: nowrap;
     font-size: 0.7rem;
     margin: 0;
 }
 .marquee-content {
-    display: inline-flex;  /* 并排两份文字 */
+    display: inline-flex;
     animation: scroll var(--marquee-time) linear infinite;
 }
 .marquee-content span + span {
-    margin-left: 2rem;     /* 两份文字间隔 */
+    margin-left: 2rem;
 }
 @keyframes scroll {
     from { transform: translateX(0); }
     to   { transform: translateX(calc(-1 * var(--marquee-dist))); }
 }
+
 /* 年份行 */
 .card-info p.year {
     font-size: 0.7rem;
 }
+
+/* 箭头按钮图标 */
 .carousel-arrow .arrow-icon {
     display: inline-block;
     position: relative;
-    top: -2px;    /* 向上浮 2px */
+    top: -2px;
 }
+
 /* 箭头按钮 */
 .carousel-arrow {
     position: absolute;
@@ -114,25 +159,34 @@
     text-align: center;
     cursor: pointer;
     opacity: 0;
-    transition: opacity .3s;
-    z-index: 10;
+    transition: opacity 0.3s;
+    z-index: 20; /* 箭头在所有内容之上 */
 }
 .carousel:hover .carousel-arrow {
-    opacity: 1; /* 悬浮时才出现 */
+    opacity: 1;
 }
 .carousel-arrow.left  { left: 8px; }
 .carousel-arrow.right { right: 8px; }
+
 /* Dark Mode Media Query */
 @media (prefers-color-scheme: dark) {
     .card {
-    box-shadow: 0 4px 8px rgba(255,255,255,0.1); /* Lighter shadow */
+        box-shadow: 0 4px 8px rgba(255,255,255,0.1);
     }
     .card-info {
-    background: rgba(0,0,0,0.4); /* Dark card info */
-    color: #eee; /* Light text */
+        background: rgba(0,0,0,0.4);
+        color: #eee;
     }
     .carousel-arrow {
-    background: rgba(255,255,255,0.3); /* Lighter arrow background for visibility */
-    color: #000; /* Dark arrow text */
+        background: rgba(255,255,255,0.3);
+        color: #000;
     }
+    .card:hover {
+        box-shadow: 0 6px 12px rgba(255,255,255,0.2);
+    }
+}
+
+/* 暂停跑马灯动画当鼠标悬浮 */
+.card:hover .marquee-content {
+    animation-play-state: paused; /* 悬浮时暂停跑马灯 */
 }
