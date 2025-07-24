@@ -387,7 +387,7 @@
       pageIndicator.style.display = 'none';
       loadingIndicator.style.display = 'block';
       try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/pdf.worker.min.js';
         const loadingTask = pdfjsLib.getDocument(pdfPath);
         const pdf = await loadingTask.promise;
         totalPages = pdf.numPages;
