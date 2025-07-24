@@ -37,4 +37,4 @@ function toggleMobileSubmenu(event, id) {
     submenu.classList.toggle('active');
 }
 
-document.documentElement.style.setProperty('--window-width', `${window.innerWidth}px`);
+// document.documentElement.style.setProperty('--window-width', `${window.innerWidth}px`);
