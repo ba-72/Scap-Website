@@ -390,7 +390,7 @@
     updatePageIndicator();
     totalPagesDisplay.textContent = totalPages;
   }
-
+  let flipBookInstance;
   // Function to load PDF with scale
   async function loadPDF(mode) {
       errorDiv.textContent = '';
@@ -414,11 +414,14 @@
           autoCenter: true,
           display: 'double', // 双页显示
           textureLoadFallback: "images/textures/white.jpg"  // Set your custom blank image
-        };
-          flipbook.on('turned', function(event, page) {
+          onCreate: function(flipbook) {
+          flipBookInstance = flipbook; // Capture the instance here
+          },
+          onFlip: function(page) {
             currentPage = page;
             updatePageIndicator();
-          });
+          }
+              };
           currentPage = 1;
           updatePageIndicator();
         } else {
