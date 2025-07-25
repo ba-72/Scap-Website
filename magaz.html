@@ -302,6 +302,16 @@
   </div>
   </main>
 <script>
+  (function() {
+    const orig = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function(type, opts) {
+      if (type === '2d') {
+        // 合并用户传的 opts（如果有）和 willReadFrequently
+        opts = Object.assign({}, opts, { willReadFrequently: true });
+      }
+      return orig.call(this, type, opts);
+    };
+  })();
   // PDF path
   const pdfPath = 'magazine/RE3.pdf';
   let currentScale = 1;
