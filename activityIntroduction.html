@@ -5,6 +5,30 @@
     <title>activity</title>
     <link rel="stylesheet" href="nav.css">
     <style>
+        main {
+            flex: 1;
+            padding: var(--nav-height);
+            overflow-x: hidden;
+        }
+
+        html, body {
+            margin: 0;
+            height: 100%;
+             --nav-height: 44px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", sans-serif;
+            background: #fff;
+            color: #000;
+        }
+
         h1, h2, h3, p, ul, li, a {
             margin: 0;
             padding: 0;
@@ -24,7 +48,22 @@
 <body>
     <div id="header-placeholder"></div>
     
+    <section id="about">
+        <h2>About</h2>
+        <p>介绍一下我们的社团</p>
+    </section>
+
     <script src="nav.js" defer></script>
     <script src="headerinsert.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 获取实际导航栏高度
+            const header = document.querySelector('#header-placeholder');
+            if(header.firstElementChild) {
+                const navHeight = header.firstElementChild.offsetHeight;
+                document.documentElement.style.setProperty('--nav-height', `${navHeight}px`);
+            }
+        });
+    </script>
 </body>
 </html>
