@@ -155,9 +155,9 @@
     }
   </style>
   <!-- Dependencies for PDF and Flipbook -->
-  <script src="./pdfjs/jquery-3.4.1.min.js"></script>
-  <script src="./pdfjs/pdf.min.js"></script>
-  <script src="./pdfjs/turn.min.js"></script>
+  <script src="pdfjs/jquery-3.4.1.min.js"></script>
+  <script src="pdfjs/pdf.min.js"></script>
+  <script src="pdfjs/turn.min.js"></script>
 </head>
 <body>
   <header>
@@ -303,7 +303,7 @@
   </main>
 <script>
   // PDF path
-  const pdfPath = '/magazine/RE3split.pdf';
+  const pdfPath = 'magazine/RE1split.pdf';
   let currentScale = 1;
   const crossPages = [];
 
@@ -387,8 +387,8 @@
       pageIndicator.style.display = 'none';
       loadingIndicator.style.display = 'block';
       try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.js';
-        const loadingTask = pdfjsLib.getDocument(pdfPath);
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/pdf.worker.min.js';
+        const loadingTask = pdfjsLib.getDocument({pdfPath,disableRange: true});
         const pdf = await loadingTask.promise;
         totalPages = pdf.numPages;
         console.log('PDF has', pdf.numPages, 'pages');
