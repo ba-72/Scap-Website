@@ -155,9 +155,9 @@
     }
   </style>
   <!-- Dependencies for PDF and Flipbook -->
-  <script src="./pdfjs/jquery-3.4.1.min.js"></script>
-  <script src="./pdfjs/pdf.min.js"></script>
-  <script src="./pdfjs/turn.min.js"></script>
+  <script src="pdfjs/jquery-3.4.1.min.js"></script>
+  <script src="pdfjs/pdf.min.js"></script>
+  <script src="pdfjs/turn.min.js"></script>
 </head>
 <body>
   <header>
@@ -387,7 +387,7 @@
       pageIndicator.style.display = 'none';
       loadingIndicator.style.display = 'block';
       try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/pdf.worker.min.js';
         const loadingTask = pdfjsLib.getDocument(pdfPath);
         const pdf = await loadingTask.promise;
         totalPages = pdf.numPages;
