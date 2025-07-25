@@ -388,7 +388,7 @@
       loadingIndicator.style.display = 'block';
       try {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/pdf.worker.min.js';
-        const loadingTask = pdfjsLib.getDocument(pdfPath);
+        const loadingTask = pdfjsLib.getDocument({pdfPath,disableRange: true});
         const pdf = await loadingTask.promise;
         totalPages = pdf.numPages;
         console.log('PDF has', pdf.numPages, 'pages');
