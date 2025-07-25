@@ -412,6 +412,11 @@
           duration: 600, // 翻页动画时长
           autoCenter: true,
           display: 'double' // 双页显示
+          var options = {
+            minScale: 1.0,
+            maxScale: 3.0,
+            textureLoadFallback: "images/textures/white.jpg"  // Set your custom blank image
+          };
         };
         flipbook.dFlip(options); // 初始化（如果需要自定义选项）
 
