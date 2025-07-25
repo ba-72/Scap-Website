@@ -428,7 +428,7 @@
             canvas.style.width = `${viewport.width / 2}px`;  // 添加 CSS 宽度
             canvas.style.height = `${viewport.height / 2}px`;  // 添加 CSS 高度
             const context = canvas.getContext('2d',{willReadFrequently: true});
-            await page.render({ canvasContext: context, viewport });
+            await page.render({ canvasContext: context, viewport }).promise;
             pageDiv.append(canvas);
             flipbook.append(pageDiv);
           }
@@ -478,7 +478,7 @@
             canvas.style.width = `${viewport.width / 2}px`; // 逻辑像素宽度
             canvas.style.height = `${viewport.height / 2}px`; // 逻辑像素高度
             const context = canvas.getContext('2d');
-            await page.render({ canvasContext: context, viewport });
+            await page.render({ canvasContext: context, viewport }).promise;
             traditionalContainer.appendChild(canvas);
           }
           // ... (页面渲染 for 循环结束后)
