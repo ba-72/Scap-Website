@@ -427,7 +427,7 @@
             canvas.width = viewport.width;
             canvas.style.width = `${viewport.width / 2}px`;  // 添加 CSS 宽度
             canvas.style.height = `${viewport.height / 2}px`;  // 添加 CSS 高度
-            const context = canvas.getContext('2d');
+            const context = canvas.getContext('2d',{willReadFrequently: true});
             await page.render({ canvasContext: context, viewport });
             pageDiv.append(canvas);
             flipbook.append(pageDiv);
