@@ -406,7 +406,8 @@
         if (mode === 'flip') {
           const flipbook = $('#flipbook');
           flipbook.empty(); // 清空旧内容
-        var options = {
+          flipbook.attr('source',pdfPath);
+        var options_flipbook = {
           webgl: true, // 启用3D效果
           height: 'auto', // 自适应高度
           duration: 600, // 翻页动画时长
@@ -414,15 +415,6 @@
           display: 'double', // 双页显示
           textureLoadFallback: "images/textures/white.jpg"  // Set your custom blank image
         };
-        flipbook.dFlip(options); // 初始化（如果需要自定义选项）
-
-        // 绑定事件更新当前页
-        flipbook.on('turned', function(event, page) {
-          currentPage = page;
-          updatePageIndicator();
-        });
-        currentPage = 1;
-        updatePageIndicator();
           flipbook.on('turned', function(event, page) {
             currentPage = page;
             updatePageIndicator();
