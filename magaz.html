@@ -389,7 +389,6 @@
       try {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/pdf.worker.min.js';
         const loadingTask = pdfjsLib.getDocument({url: pdfPath,disableRange: true});
-        //const loadingTask = pdfjsLib.getDocument({ url: "magazine/RE3.pdf" });
         const pdf = await loadingTask.promise;
         totalPages = pdf.numPages;
         console.log('PDF has', pdf.numPages, 'pages');
