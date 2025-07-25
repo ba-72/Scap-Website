@@ -10,6 +10,15 @@
         rel="stylesheet"
     >
     <style>
+
+      h1, h2, h3, p, ul, li, a {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            color: inherit;
+        }
+        
         .gallery {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
@@ -207,6 +216,7 @@
   /* 整体背景 */
   body, .gallery {
     background-color: #121212;
+    color: #fff;
   }
 
   /* 卡片阴影稍微提亮 */
@@ -240,6 +250,7 @@
     </style>
 </head>
 <body style="margin: 0;">
+  <div id="header-placeholder"></div>
     <div class="gallery" id="gallery">
         <div class="card">
             <div class="content" style="background-image: url('img/IMG_0572.PNG');"></div>
@@ -499,7 +510,8 @@
   }
 });
     </script>
-
+  <script src="nav.js" defer></script>
+  <script src="headerinsert.js" defer></script>
 
 </body>
 </html>
