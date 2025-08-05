@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SCAP Cinema</title>
+  <link rel="stylesheet" href="nav.css">
   <link rel="stylesheet" href="block1.css">
   <base href="https://ba-72.github.io/Scap-Website/">
   <style>
@@ -498,15 +499,49 @@
 </head>
 <body>
   <header>
+    <div class="logo"> </div>
     <nav>
       <ul>
-        <li><a href="#">爱猫 TV+</a></li>
-        <li><a href="#">电影</a></li>
-        <li><a href="#">电视剧</a></li>
-        <li><a href="#">体育</a></li>
-        <li><a href="#">儿童</a></li>
-        <li><a href="#">商店</a></li>
-        <li><a href="#">搜索</a></li>
+        <li>
+          <a href="#" class="active">Home</a>
+          <div class="submenu">
+            <div class="submenu-content">
+              <div class="submenu-column">
+                <h3>Our Works</h3>
+                <ul>
+                  <li><a href="#">社刊 RE:01</a></li>
+                  <li><a href="#">社刊 RE:02</a></li>
+                  <li><a href="#">社刊 RE:03</a></li>
+                </ul>
+              </div>
+              <div class="submenu-column">
+                <h3>About us</h3>
+                <ul>
+                  <li><a href="#">社团介绍</a></li>
+                  <li><a href="#">人员介绍</a></li>
+                  <li><a href="#">编年史</a></li>
+                </ul>
+              </div>
+              <div class="submenu-column">
+                <h3>Support us</h3>
+                <ul>
+                  <li><a href="#">Mac Support</a></li>
+                  <li><a href="#">AppleCare+ for Mac</a></li>
+                  <li><a href="#">macOS Tahoe 26 Preview</a></li>
+                  <li><a href="#">Apple Intelligence</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="overlay"></div>
+        </li>
+        <li><a href="#">Today / 近期活动</a></li>
+        <li><a href="#">Animate / 放映</a></li>
+        <li><a href="#">Comic / 绘画</a></li>
+        <li><a href="#">Game / 旮旯给木制作</a></li>
+        <li><a href="#">Novel / 投稿</a></li>
+        <li><a href="#">往期活动</a></li>
+        <li><a href="#">Routine</a></li>
       </ul>
     </nav>
   </header>
@@ -653,6 +688,8 @@
       </div>
     </div>
   </div>
+
+  <script src="nav.js" defer></script>
   <script>
     function playVideo(src) {
       const container = document.getElementById('videoPlayerContainer');
