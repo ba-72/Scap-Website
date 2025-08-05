@@ -6,7 +6,6 @@
   <title>Magazine Viewer</title>
   <link rel="stylesheet" href="nav.css">
   <link rel="stylesheet" href="pdf.css">
-  <link href="pdfjs/dflip.min.css" rel="stylesheet" type="text/css">
   <style>
     /* ========== 基础重置与布局 ========== */
     html, body {
@@ -156,9 +155,9 @@
     }
   </style>
   <!-- Dependencies for PDF and Flipbook -->
-  <script src="pdfjs/jquery-3.4.1.min.js"></script>
-  <script src="pdfjs/pdf.min.js"></script>
-  <script src="pdfjs/dflip.min.js"></script>
+  <script src="/pdfjs/jquery-3.4.1.min.js"></script>
+  <script src="/pdfjs/pdf.min.js"></script>
+  <script src="/pdfjs/turn.min.js"></script>
 </head>
 <body>
   <header>
@@ -285,7 +284,7 @@
     <div id="viewer-container">
       <div id="loading-indicator">Loading PDF...</div>
       <div id="flipbook-container">
-        <div id="flipbook" class="_df_book"></div>
+        <div id="flipbook"></div>
       </div>
       <div id="traditional-container"></div>
       <div id="pdf-error"></div>
@@ -303,18 +302,8 @@
   </div>
   </main>
 <script>
-    (function() {
-    const orig = HTMLCanvasElement.prototype.getContext;
-    HTMLCanvasElement.prototype.getContext = function(type, opts) {
-      if (type === '2d') {
-        // 合并用户传的 opts（如果有）和 willReadFrequently
-        opts = Object.assign({}, opts, { willReadFrequently: true });
-      }
-      return orig.call(this, type, opts);
-    };
-  })();
   // PDF path
-  const pdfPath = 'magazine/RE3.pdf';
+  const pdfPath = '/magazine/C247b_Problem_Set_1_Solutions.pdf';
   let currentScale = 1;
   const crossPages = [];
 
@@ -378,7 +367,8 @@
     currentPage = pageNum;
     const mode = modeSwitch.checked ? 'flip' : 'traditional';
     if (mode === 'flip') {
-      $('#flipbook').dFlip('gotoPage', pageNum); // DearFlip API跳转
+      const flipbook = $('#flipbook');
+      flipbook.turn('page', pageNum); // Turn.js 跳转
     } else {
       const canvases = traditionalContainer.querySelectorAll('canvas');
       if (canvases[pageNum - 1]) {
@@ -390,38 +380,86 @@
     updatePageIndicator();
     totalPagesDisplay.textContent = totalPages;
   }
-  let flipBookInstance;
+
   // Function to load PDF with scale
   async function loadPDF(mode) {
       errorDiv.textContent = '';
       pageIndicator.style.display = 'none';
       loadingIndicator.style.display = 'block';
       try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/pdf.worker.min.js';
-        const loadingTask = pdfjsLib.getDocument({url:pdfPath,disableRange: true});
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.js';
+        const loadingTask = pdfjsLib.getDocument(pdfPath);
         const pdf = await loadingTask.promise;
         totalPages = pdf.numPages;
         console.log('PDF has', pdf.numPages, 'pages');
 
         if (mode === 'flip') {
           const flipbook = $('#flipbook');
-          flipbook.empty(); // 清空旧内容
-          flipbook.attr('source',pdfPath);
-        var options_flipbook = {
-          webgl: true, // 启用3D效果
-          height: 'auto', // 自适应高度
-          duration: 600, // 翻页动画时长
-          autoCenter: true,
-          display: 'double', // 双页显示
-          textureLoadFallback: "images/textures/white.jpg"  // Set your custom blank image
-          onCreate: function(flipbook) {
-          flipBookInstance = flipbook; // Capture the instance here
-          },
-          onFlip: function(page) {
+          if (!$.fn.turn) {
+            throw new Error('Turn.js is not loaded');
+          }
+          if (flipbook.length === 0) {
+            throw new Error('Flipbook element not found');
+          }
+          if (flipbook.data('turn')) {
+            flipbook.turn('destroy');
+          }
+          flipbook.empty();
+          flipbook.css({ transform: 'scale(1)' }); // 重置缩放
+
+          let pageW, pageH;
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale: currentScale * 2});
+
+            if (i === 1) {
+              pageW = viewport.width/2;
+              pageH = viewport.height/2;
+              // 动态绑定高度到 viewport.height（单页高度）
+              flipContainer.style.height = `${pageH}px`; // 设置 #flipbook-container 高度
+            }
+
+            const pageDiv = $('<div class="page"></div>');
+            pageDiv.css({ width: viewport.width / 2, height: viewport.height / 2 });
+
+            const canvas = document.createElement('canvas');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            canvas.style.width = `${viewport.width / 2}px`;  // 添加 CSS 宽度
+            canvas.style.height = `${viewport.height / 2}px`;  // 添加 CSS 高度
+            const context = canvas.getContext('2d');
+            await page.render({ canvasContext: context, viewport });
+            pageDiv.append(canvas);
+            flipbook.append(pageDiv);
+          }
+
+          // 计算书本尺寸（双页宽度，单页高度）
+          const bookW = 2 * pageW;
+          const bookH = pageH;
+
+          // 获取容器宽度（用于缩放计算）
+          const containerW = viewerContainer.clientWidth;
+          const containerH = viewerContainer.clientHeight; // 但现在高度由 JS 设置为 pageH
+
+          // 计算缩放因子：仅缩小以适应（不超过1），保持比例
+          const scaleFactor = Math.min(1, containerW / bookW, containerH / bookH);
+
+          // 应用缩放
+          flipbook.css({ transform: `scale(${scaleFactor})` });
+
+          flipbook.turn({
+            width: bookW,  
+            height: bookH, 
+            autoCenter: true,
+            display: 'double',
+            duration: 600,
+            acceleration: true,
+            gradients: true
+          });
+          flipbook.bind('turned', function(event, page) {
             currentPage = page;
             updatePageIndicator();
-          }
-              };
+          });
           currentPage = 1;
           updatePageIndicator();
         } else {
@@ -440,7 +478,7 @@
             canvas.style.width = `${viewport.width / 2}px`; // 逻辑像素宽度
             canvas.style.height = `${viewport.height / 2}px`; // 逻辑像素高度
             const context = canvas.getContext('2d');
-            await page.render({ canvasContext: context, viewport }).promise;
+            await page.render({ canvasContext: context, viewport });
             traditionalContainer.appendChild(canvas);
           }
           // ... (页面渲染 for 循环结束后)
