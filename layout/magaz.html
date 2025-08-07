@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magazine Viewer</title>
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/pdf.css">
+  <link rel="stylesheet" href="../css/botton.css">
+  <!-- Dependencies for PDF and Flipbook -->
+  <script src="../pdfjs/jquery-3.4.1.min.js"></script>
+  <script src="../pdfjs/pdf.min.js"></script>
+  <script src="../pdfjs/turn.min.js"></script>
+</head>
+<body>
+<div id="header-placeholder"></div>
+  <main id="content">
+    <div id="viewer-container">
+      <div id="loading-indicator">Loading PDF...</div>
+      <div id="flipbook-container">
+        <div id="flipbook"></div>
+      </div>
+      <div id="traditional-container"></div>
+      <div id="pdf-error"></div>
+    </div>
+    <div id="page-number-indicator"></div>
+    <div class="settings-button" id="mode-indicator">⋯</div>
+      <div class="settings-menu" id="settings-menu">
+        <div class="menu-item">
+          <span>&nbsp;&nbsp;&nbsp;切换模式</span>
+          <label class="mode-toggle">
+            <input type="checkbox" id="mode-switch" checked>
+            <span class="slider">
+              <span class="label-left">Flip</span>
+              <span class="label-right">Novel</span>
+            </span>
+          </label>
+        </div>
+        <div class="menu-item" id="spread-toggle-item">
+          <span>&nbsp;&nbsp;&nbsp;切换跨页显示</span>
+          <label class="spread-toggle">
+            <input type="checkbox" id="spread-switch" checked>
+            <span class="slider">
+              <span class="label-left">跨页</span>
+              <span class="label-right">单页</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    <div id="page-jump-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <span id="total-pages-display"></span>
+      <label for="jump-page-input">Jump to:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+      <input type="number" id="jump-page-input" min="1" placeholder="输入页码">
+      <label for="jump-page-input">&nbsp;</label>
+      <button id="jump-confirm">跳转</button>
+    </div>
+    </div>
+  </main>
+  <script src="../js/magaz.js" data-header-path="../magazine/RE3.pdf" defer></script>
+  <script src="../js/headerinsert.js" data-header-path="header/header1.html" defer></script>
+</body>
+</html>

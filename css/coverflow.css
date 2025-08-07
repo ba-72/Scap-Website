@@ -1,0 +1,84 @@
+    /* 更真实的 Cover Flow - 应用在第一排 (精选内容) */
+    .cover-flow-wrapper {
+      perspective: 120em;
+      position: relative;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .cover-flow {
+      transform-style: preserve-3d;
+      list-style: none;
+      white-space: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 0 10px;
+      margin: 0;
+      --cover-size: calc(10vw + 200px);
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      min-height: auto;
+    }
+    .cover-flow::-webkit-scrollbar {
+      display: none;
+    }
+    .cover-flow li {
+      transform-style: preserve-3d;
+      display: inline-block;
+      width: var(--cover-size);
+      aspect-ratio: 16/9;
+      scroll-snap-align: center;
+      view-timeline-name: --li-in-and-out-of-view;
+      view-timeline-axis: inline;
+      animation: adjust-z-index linear both;
+      animation-timeline: --li-in-and-out-of-view;
+      perspective: 40em;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 10px;
+      position: relative;
+    }
+    .cover-flow li.placeholder {
+      scroll-snap-align: none;
+      pointer-events: none;
+      background-color: transparent;
+      cursor: default;
+    }
+    .cover-flow li img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      -webkit-box-reflect: below 0.5em linear-gradient(transparent, rgba(0,0,0,0.25));
+      animation: rotate-cover linear both;
+      animation-timeline: --li-in-and-out-of-view;
+      transform: translateX(-100%) rotateY(-45deg);
+      transform-style: preserve-3d;
+      will-change: transform;
+      position: relative;
+      user-select: none;
+      border-radius: 10px;
+    }
+    /* 旋转动画 */
+    @keyframes rotate-cover {
+      0% {
+        transform: translateX(-100%) rotateY(-45deg);
+      }
+      35% {
+        transform: translateX(0) rotateY(-45deg);
+      }
+      50% {
+        transform: rotateY(0deg) translateZ(1em) scale(1.5);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      }
+      65% {
+        transform: translateX(0) rotateY(45deg);
+      }
+      100% {
+        transform: translateX(100%) rotateY(45deg);
+      }
+    }
+    /* Z-index 调整动画 */
+    @keyframes adjust-z-index {
+      0% { z-index: 1; }
+      50% { z-index: 100; }
+      100% { z-index: 1; }
+    }

@@ -1,0 +1,420 @@
+/* ========== 顶部导航 ========== */
+    html{
+      margin: 0;            /* 清除默认外边距 */
+      height: 100%;         /* 让 body 占满视口高度 */
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 44px;
+      background: #fff;
+      border-bottom: 1px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", sans-serif;
+      background: #fff;
+      color: #000;
+    }
+    /* 主内容区 */
+    main {
+      flex: 1;
+      padding: 44px 0px 0px;
+      overflow-x: hidden;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    h1, h2, h3, p, ul, li, a {
+      margin: 0;
+      padding: 0;
+      list-style: none;       /* 列表无默认符 */
+      text-decoration: none;  /* 链接无下划线 */
+      color: inherit;         /* 继承父级文字颜色 */
+    }
+    nav ul {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+    nav ul li {
+      position: static;
+    }
+    nav > ul > li:has(.submenu) {
+      position: relative; /* 设置定位基准 */
+    }
+    nav ul li a {
+      display: block;
+      padding: 10px 0;
+      font-size: 12px;
+      transition: color .2s;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: #0071e3;
+    }
+    @media (max-width: 900px) {
+      nav > ul {
+        display: none !important;
+      }
+    }
+    nav ul li a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      left: 0; right: 0;
+      height: 2px;
+      background: #0071e3;
+    }
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    /* ========== 背景蒙层模糊 ========== */
+    .overlay {
+      position: fixed;
+      top: 44px; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.6);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease-out;
+      z-index: 900;
+      pointer-events: none; /* 添加此行，修复菜单隐藏问题 */
+    }
+
+    .overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    nav ul li:hover > .overlay {
+      visibility: visible;
+      opacity: 1;
+    }
+    /* ========== 二级菜单 ========== */
+    .submenu {
+      position: fixed;
+      top: 40px;              /* 紧贴导航下方 */
+      left: 0;
+      width: 100vw;           /* 填满整个视口宽度 */
+      /* width: max-content; 宽度按内容自适应 */
+      background: rgba(255, 255, 255, 1);
+      backdrop-filter: blur(0px); /* 背景再次模糊 */
+      box-shadow: 0 10px 30px rgba(0,0,0,0);
+      padding: 20px 0;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-10px); /* NEW: Start position for slide-down */
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0.4s; /* NEW: Add transform transition for slide */
+      z-index: 1001;
+      max-height: calc(100vh - 44px); /* 最大高度为视口剩余 */
+      overflow-y: auto;      /* 内容超出时滚动 */
+    }
+
+    nav ul li:hover > .submenu {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+      
+    .submenu-content {
+      display: flex;
+      grid-template-columns: 1fr 1fr 1fr;
+      max-width: 1200px;
+      margin: 28px auto 28px calc(50vw - 406px);
+      gap: 150px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
+      will-change: transform, opacity;
+      transform: translateY(-10px);
+    }
+
+    .parent-menu:hover .submenu {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 菜单项通用样式 */
+    .submenu-column li {
+      /* opacity: 1;
+      transform: translateX(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease; */
+      opacity: 0;
+      transform: translateY(-10px); /* 改为垂直方向：初始位置向上偏移 */
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    /* 按左上到右下顺序设置动画延迟 */
+    /* 第一列 */
+    .submenu-column:nth-child(1) li:nth-child(1) {
+      transition-delay: 0.03s;
+    }
+    .submenu-column:nth-child(1) li:nth-child(2) {
+      transition-delay: 0.06s;
+    }
+    .submenu-column:nth-child(1) li:nth-child(3) {
+      transition-delay: 0.09s;
+    }
+
+    /* 第二列 */
+    .submenu-column:nth-child(2) li:nth-child(1) {
+      transition-delay: 0.15s;
+    }
+    .submenu-column:nth-child(2) li:nth-child(2) {
+      transition-delay: 0.18s;
+    }
+    .submenu-column:nth-child(2) li:nth-child(3) {
+      transition-delay: 0.21s;
+    }
+
+    /* 第三列 */
+    .submenu-column:nth-child(3) li:nth-child(1) {
+      transition-delay: 0.27s;
+    }
+    .submenu-column:nth-child(3) li:nth-child(2) {
+      transition-delay: 0.3s;
+    }
+    .submenu-column:nth-child(3) li:nth-child(3) {
+      transition-delay: 0.33s;
+    }
+    .submenu-column:nth-child(3) li:nth-child(4) {
+      transition-delay: 0.36s;
+    }
+
+    /* 鼠标悬停时触发动画 */
+    nav ul li:hover > .submenu .submenu-column li {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    nav ul li:hover > .submenu .submenu-content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .submenu-column h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    .submenu-column ul {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .submenu-column:first-child ul li a {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 0.8;
+    }
+    .submenu-column:not(:first-child) ul li a {
+      font-size: 13px;
+      line-height: 0.8;
+      font-weight: 600;
+    }
+    /* ========== 主体内容模糊 ========== */
+    .blur {
+      filter: blur(5px);
+      transition: filter 0.4s ease-out;
+    }
+    main.blur {
+      filter: blur(5px);
+    }
+
+    /* 确保模糊层是二级菜单的直接兄弟元素 */
+    .blur-overlay {
+      position: fixed;
+      top: 44px; /* 从导航栏下方开始覆盖 */
+      left: 0;
+      width: 100vw;
+      height: calc(100vh - 44px); /* 扣除导航栏高度 */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px); /* Safari兼容 */
+      background: rgba(255, 255, 255, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      z-index: 999; /* 低于二级菜单（1001）但高于主内容 */
+      pointer-events: none; /* 避免遮挡下方交互 */
+    }
+
+    /* 修正触发逻辑：当二级菜单显示时激活模糊层 */
+    nav ul li:hover > .submenu + .blur-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Mobile Menu Styles */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #000;
+    }
+    @media (max-width: 900px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+    }
+    .mobile-menu {
+      position: fixed;
+      top: 44px;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 20px;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out, visibility 0.4s;
+      z-index: 1001;
+      max-height: calc(100vh - 44px);
+      overflow-y: auto;
+    }
+    .mobile-menu.active {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .mobile-menu ul {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .mobile-menu ul li a {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 0.8;
+      display: block;
+      padding: 10px 0;
+      transition: color .2s;
+    }
+    .mobile-menu ul li a:hover,
+    .mobile-menu ul li a.active {
+      color: #0071e3;
+    }
+    .mobile-submenu {
+      padding-left: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mobile-submenu.active {
+      display: flex;
+    }
+    .mobile-submenu li a {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 0.8;
+    }
+    .mobile-menu h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    footer {
+      background: #f5f5f7;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 12px;
+      color: #444;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .footer-links ul {
+      min-width: 120px;
+    }
+    @media (prefers-color-scheme: dark) {
+      header {
+        background: rgba(30,30,30,1);
+        border-bottom: 1px solid rgba(255,255,255,0);
+      }
+      body {
+        background: #1c1c1e; /* Dark background */
+        color: #fff; /* Light text */
+      }
+      .overlay {
+        background: rgba(0,0,0,0.6);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+      }
+      .submenu {
+        background: rgba(30,30,30,1);
+        -webkit-backdrop-filter: blur(0px);
+        backdrop-filter: blur(0px);
+        box-shadow: 0 10px 30px rgba(255,255,255,0);
+      }
+      .submenu-column h3 {
+        color: #aaa;
+      }
+      section:nth-of-type(even) {
+        background: rgba(50, 50, 50, 0.678);
+      }
+      footer {
+        background: #121212;
+        color: #ccc;
+      }
+      nav ul li a:hover,
+      nav ul li a.active {
+        color: #4da0ff;
+      }
+      .mobile-menu {
+        background: rgba(30,30,30,1);
+        box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+      }
+      .mobile-menu h3 {
+        color: #aaa;
+      }
+      .mobile-menu-toggle {
+        color: #fff;
+      }
+
+      .blur-overlay {
+        position: fixed;
+        top: 44px; /* 从导航栏下方开始覆盖 */
+        left: 0;
+        width: 100vw;
+        height: calc(100vh - 44px); /* 扣除导航栏高度 */
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px); /* Safari兼容 */
+        background: rgba(30, 30, 30, 0.2);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+        z-index: 999; /* 低于二级菜单（1001）但高于主内容 */
+        pointer-events: none; /* 避免遮挡下方交互 */
+      }
+    }

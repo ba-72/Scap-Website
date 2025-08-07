@@ -1,0 +1,111 @@
+    /* Toggle switch styling */
+    .mode-toggle, .spread-toggle {
+      position: relative;
+      display: inline-block;
+      width: 60px; /* 缩小宽度 */
+      height: 20px; /* 缩小高度 */
+    }
+    .mode-toggle input, .spread-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 20px;
+      font-size: 10px; /* 缩小字体 */
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px; /* 缩小滑块高度 */
+      width: 28px; /* 缩小滑块宽度 */
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    input:checked + .slider {
+      background-color: #0071e3;
+    }
+    input:checked + .slider:before {
+      transform: translateX(19px); /* 调整滑块移动距离 */
+    }
+    /* 默认隐藏标签 */
+    .slider .label-left, .slider .label-right {
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    /* 菜单样式 */
+    .settings-menu {
+      position: absolute;
+      top: 120px;
+      left: 120px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border: 1px solid #e5e5e5;
+      border-radius: 30px;
+      padding: 12px;
+      display: none;
+      z-index: 1002;
+      width: 200px;
+      opacity: 0.8;
+    }
+    .settings-menu.open {
+      display: block;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    .menu-item label {
+      margin: 0;
+    }
+    .menu-item span {
+      margin-right: 10px;
+    }
+    .settings-button {
+      cursor: pointer;
+      font-size: 20px;
+      color: #666;
+    }
+    .settings-button:hover {
+      color: #0071e3;
+    }
+    /* 暗色模式调整 */
+    @media (prefers-color-scheme: dark) {
+      .slider {
+        background-color: #555;
+      }
+      input:checked + .slider {
+        background-color: #4da0ff;
+      }
+      .slider:before {
+        background-color: #1c1c1e;
+      }
+      #loading-indicator {
+        color: #aaa;
+      }
+      .settings-menu {
+        background: rgba(0,0,0,0.9);
+        border: 1px solid #333;
+      }
+    }

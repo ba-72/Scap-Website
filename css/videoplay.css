@@ -1,0 +1,45 @@
+    /* 播放按钮 */
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #000;
+      opacity: 0;
+      transition: opacity 0.3s, width 0.3s, height 0.3s, background 0.3s;
+      z-index: 10;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .play-button::before {
+      content: '▶';
+      position: relative;
+      left: 2px;
+      top: -1px;
+      transition: transform 0.3s, font-size 0.3s, text-shadow 0.3s;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .cover-flow li:hover img {
+      position: relative;
+      z-index: 9;
+    }
+    .cover-flow li.centered:hover .play-button {
+      opacity: 1;
+    }
+    .play-button:hover {
+      width: 47px;
+      height: 47px;
+      background: rgba(255,255,255,0.5);
+    }
+    .play-button:hover::before {
+      font-size: 26px;
+      transform: translate(0px, 0px);
+      text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
