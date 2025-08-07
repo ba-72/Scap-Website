@@ -1,9 +1,6 @@
 .carousel {
     position: relative;
     padding: 20px 10vw;
-    padding-bottom: 10px;
-    padding-top: 10px; /* 增加左右padding，为放大卡片留空间 */
-    /* 移除 overflow: hidden，防止裁剪放大卡片 */
 }
 
 /* 可滚动的卡片行 */
@@ -13,6 +10,9 @@
     overflow-x: auto;                   /* 支持横向滚动 */
     scroll-behavior: smooth;            /* 点击箭头时平滑滚动 */
     -webkit-overflow-scrolling: touch;  /* iOS 上更顺滑 */
+    padding-bottom: 20px;
+    padding-top: 20px; /* 增加左右padding，为放大卡片留空间 */
+    /* 移除 overflow: hidden，防止裁剪放大卡片 */
     
     /* 隐藏原生滚动条 */
     scrollbar-width: none;              /* Firefox */
