@@ -5,23 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scap Anime</title>
   <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/block1.css">
+  <link rel="stylesheet" href="css/carousel.css">
   <link rel="stylesheet" href="css/hero.css">
-<style>
-    /* Sections */
-    section { padding: 100px 20px; margin: auto; margin-top: 10px;}
-    .section-title { font-size: 2.5rem; margin-top: 10px; text-transform: uppercase; }
-    .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-    .card1 { background: #f09696; padding: 20px; border-radius: 8px; }
-    .card1 h3 { margin-bottom: 10px; font-size: 1.5rem; }
-    .card1 p { margin-bottom: 15px; line-height: 1.5; }
-    .card1 a { color: #ffcc00; text-decoration: none; font-weight: bold; }
-</style>
 </head>
 <body>
-  
-<div id="header-placeholder"></div>
-
+  <!-- 导航栏占位符，给headerinsert.js一个坐标 -->
+<div id="header-placeholder"></div> 
   <!-- 主体内容区域 -->
   <main id="content">
     <section class="hero">
@@ -34,34 +23,26 @@
 
     <section id="about">
       <h2 class="section-title">About</h2>
-      <p>介绍一下我们的社团</p>
     </section>
 
     <section id="events">
       <h2 class="section-title">Today / 近期活动</h2>
       <div class="card-container">
         <div class="card1">
-          <h3>Events for Everyone</h3>
-          <p>Trivia Nights, Jeopardy, Drawing Workshops, Karaoke and more! Come join us, they are open to everyone.</p>
-          <a href="#">Upcoming Events →</a>
         </div>
       </div>
     </section>
 
     <section id="Animate">
       <h2 class="section-title">Animate / 放映</h2>
-      <p>Meet our current team of officers organizing fun events and activities.</p>
     </section>
 
     <section id="Comic">
       <h2 class="section-title">Comic / 绘画</h2>
-      <p>Konshuu, Cal Animage Alpha's magazine featuring articles and illustrations on anime culture, from both guests and current officers.</p>
-      <a href="#">Read Konshuu →</a>
     </section>
 
     <section id="featured">
       <h2 class="section-title">Featured</h2>
-      <p>Meet our current team of officers organizing fun events and activities.</p>
       <div class="carousel">
         <button class="carousel-arrow left" aria-label="Previous">
           <span class="arrow-icon">‹</span>
@@ -135,7 +116,6 @@
 
     <section id="gal">
       <h2 class="section-title">Game / 旮旯给木制作</h2>
-      <p>把旮旯给母的制作近况贴一下？</p>
     </section>
 
     <!-- 页脚 -->
@@ -151,7 +131,7 @@
 
  <script src="js/nav.js" defer></script>
  <script src="js/hero.js" defer></script>
-<script src="js/block1.js" defer></script>
+<script src="js/carousel.js" defer></script>
 <script src="js/headerinsert.js" defer></script>
 </body>
 </html>

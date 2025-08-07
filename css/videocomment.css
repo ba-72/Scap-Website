@@ -108,3 +108,25 @@
     cursor: pointer;
     color: #8899a6;
 }
+@media (prefers-color-scheme: light) {
+    .movie-modal {
+    background: rgba(255, 255, 255, 0.8);
+    }
+    .movie-modal-content {
+    background: #e6e6e6;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    color: #000;
+    }
+    .movie-modal-title {
+    color: #000;
+    }
+    .movie-modal-info {
+    color: #666;
+    }
+    .movie-modal-rating-label {
+    color: #666;
+    }
+    .movie-modal-close {
+    color: #666;
+    }
+}

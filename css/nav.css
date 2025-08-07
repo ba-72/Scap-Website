@@ -3,6 +3,19 @@
       margin: 0;            /* 清除默认外边距 */
       height: 100%;         /* 让 body 占满视口高度 */
     }
+    section {
+      padding: 50px 20px;
+      margin: auto;
+    }
+    .section-title {
+      font-size: 36px;
+      margin-bottom: 10px;
+      padding-left: 10vw;
+      text-transform: uppercase;
+    }
+    .section-title:lang(zh) {
+      font-size: 30px; /* 中文大小 */
+    }
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -379,9 +392,6 @@
       }
       .submenu-column h3 {
         color: #aaa;
-      }
-      section:nth-of-type(even) {
-        background: rgba(50, 50, 50, 0.678);
       }
       footer {
         background: #121212;

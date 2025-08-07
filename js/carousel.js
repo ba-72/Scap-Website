@@ -1,4 +1,4 @@
-//scriptblock1.js
+//scriptcarousel.js
 // Carousel Navigation
 const carouselContainer = document.querySelector('.carousel-container');
 const btnLeft = document.querySelector('.carousel-arrow.left');

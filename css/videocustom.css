@@ -1,0 +1,28 @@
+/* 自定义卡片尺寸 */
+.horizontal .card {
+    width: 280px;
+    height: 180px;
+}
+.vertical .card {
+    width: 220px;
+    height: 300px;
+}
+/* Mobile mode: when aspect-ratio > 1:2 (i.e., max-aspect-ratio: 1/2) */
+@media (max-aspect-ratio: 1/1) {
+    .horizontal .card, .vertical .card {
+      aspect-ratio: 1/1;
+      width: var(--cover-size); /* Reuse --cover-size for consistency, or adjust as needed */
+      height: 180px;
+    }
+    section {
+      padding: 20px 10px;
+    }
+    .section-title {
+      font-size: 26px;
+      margin-bottom: 5px;
+      padding-left: 5vw;
+    }
+    .section-title:lang(zh) {
+      font-size: 20px; /* 中文大小 */
+    }
+}

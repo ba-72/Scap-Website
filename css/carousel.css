@@ -1,6 +1,6 @@
 .carousel {
     position: relative;
-    padding: 20px 16px;
+    padding: 20px 10vw;
     padding-bottom: 10px;
     padding-top: 10px; /* 增加左右padding，为放大卡片留空间 */
     /* 移除 overflow: hidden，防止裁剪放大卡片 */
@@ -10,7 +10,6 @@
 .carousel-container {
     display: flex;
     gap: 16px;
-    padding: 20px 16px;
     overflow-x: auto;                   /* 支持横向滚动 */
     scroll-behavior: smooth;            /* 点击箭头时平滑滚动 */
     -webkit-overflow-scrolling: touch;  /* iOS 上更顺滑 */
@@ -166,6 +165,17 @@
 }
 .carousel-arrow.left  { left: 8px; }
 .carousel-arrow.right { right: 8px; }
+/* 暂停跑马灯动画当鼠标悬浮 */
+.card:hover .marquee-content {
+    animation-play-state: paused; /* 悬浮时暂停跑马灯 */
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .carousel {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+}
 
 /* Dark Mode Media Query */
 @media (prefers-color-scheme: dark) {
@@ -183,9 +193,4 @@
     .card:hover {
         box-shadow: 0 6px 12px rgba(255,255,255,0.2);
     }
-}
-
-/* 暂停跑马灯动画当鼠标悬浮 */
-.card:hover .marquee-content {
-    animation-play-state: paused; /* 悬浮时暂停跑马灯 */
 }

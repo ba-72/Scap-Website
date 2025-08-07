@@ -1,0 +1,97 @@
+/* 选中的视频介绍 - 模仿X帖子样式 */
+    .selected-description {
+        box-sizing: border-box;
+        max-width: 1200px;
+        padding: 25px 4vw;
+        margin: 0 auto;
+        text-align: left;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+        position: relative;
+        border-top: 1px solid #8899a6;
+        border-bottom: 1px solid #8899a6;
+    }
+    .selected-description.fade {
+      opacity: 0;
+    }
+    .post-header {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .post-user {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .post-user-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      background-color: #1da1f2; 
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    .post-user-left { display: flex; align-items: center; }
+    .post-meta { font-size: 12px; line-height: 1.4; margin: 10px 0; color: #8899a6; text-align: right; }
+    .post-actions {
+      display: flex;
+      gap: 15px;
+      font-size: 14px;
+      color: #8899a6;
+    }
+    .post-actions span {
+      cursor: pointer;
+    }
+    .post-content {
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 10px 0;
+      color: #fff;
+    }
+    .post-link {
+      color: #1da1f2;
+      text-decoration: none;
+      display: block;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    .post-tags {
+      font-size: 14px;
+      color: #1da1f2;
+      word-wrap: break-word;
+    }
+    @media (prefers-color-scheme: light) {
+      .selected-description {
+        border-top: 1px solid #666;
+        border-bottom: 1px solid #666;
+      }
+      .post-header {
+        color: #000;
+      }
+      .post-user-logo {
+        background-color: #007bff; 
+        color: #000;
+      }
+      .post-meta {
+        color: #666;
+      }
+      .post-actions {
+        color: #666;
+      }
+      .post-content {
+        color: #000;
+      }
+      .post-link {
+        color: #007bff;
+      }
+      .post-tags {
+        color: #007bff;
+      }
+    }
